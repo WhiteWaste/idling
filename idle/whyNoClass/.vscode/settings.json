@@ -1,0 +1,14 @@
+{
+    "pixelbyte.love2d.path": "G:\\luv\\LOVE\\love.exe",
+    "pixelbyte.love2d.debug": true,
+    "pixelbyte.love2d.revealStatus": true,
+    "pixelbyte.love2d.runOnSave": false,
+    "Lua.runtime.version": "LuaJIT",
+    "Lua.runtime.special": [],
+    "Lua.workspace.library": [
+        "${3rd}/love2d/library"
+    ],
+    "Lua.diagnostics.disable": [
+        "duplicate-set-field"
+    ]
+}
