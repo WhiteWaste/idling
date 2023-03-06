@@ -34,13 +34,13 @@ function Button:draw()
     self.text:draw()
 end
 
----checks if the cursor is over the button returns true if that is the case
+--[[checks if the cursor is over the button returns true if that is the case
 ---@return boolean
 function Button:isHovered()
     local cp = Cursor:getPosition()
     return cp.x > self.position.x and cp.x < self.position.x + self.size.x and cp.y > self.position.y and cp.y < self.position.y + self.size.y
 end
-
+]]
 ---if put in the onUpdate list will change the state of the button when the cursor is over it
 function Button:updateState()
     if self:isHovered() then

@@ -7,7 +7,6 @@ Color = require "guts.graphics.color"
 Text = require "guts.gui.text"
 
 local Game = {}
-
 Game.lists = {} -- holds lists of functions that get called in their respective functions
 
 --[[-gets called on every mouse click
@@ -49,9 +48,7 @@ end
 
 --gets called every frame
 function Game:onUpdate(dt)
-    for key, value in pairs(Game.lists.onUpdate:getItems()) do
-        value()
-    end
+   
 end
 
 --gets called every frame
