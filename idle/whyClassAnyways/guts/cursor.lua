@@ -5,13 +5,7 @@ local Cursor = {}
 ---returns the Cursors' current position relative to the resolution in pixels
 ---@return Point
 function Cursor.getPosition()
-    return Point:new(love.mouse.getX() / Window.scale.x, love.mouse.getY() / Window.scale.y)
-end
-
----returns the exact position of the cursor on the screen in pixels
----@return Point
-function Cursor.getAbsolutePosition()
-    return Point:new(love.mouse.getX(), love.mouse.getY())
+    return Point.new(love.mouse.getX(), love.mouse.getY())
 end
 
 ---sets the position of the 

@@ -1,6 +1,6 @@
 ---@meta
 
----@alias buses string the specific flow you want
+---@alias channels string the specific flow you want
 ---| '"onLoad"'
 ---| '"onUpdate"'
 ---| '"onDraw"'

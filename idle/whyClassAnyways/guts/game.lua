@@ -1,30 +1,42 @@
 Point = require "guts.point2d"
 List = require "guts.list"
 
-local Window = require "guts.window"
+Window = require "guts.window"
+Cursor = require "guts.cursor"
 
 Color = require "guts.graphics.color"
-Text = require "guts.gui.text"
 
 local Game = {}
-Game.lists = {} -- holds lists of functions that get called in their respective functions
 
---[[-gets called on every mouse click
+Game.channels = {}
+Game.channels.onLoad = List:new("OnLoad") -- all functions in it get executed on the start 
+Game.channels.onResize = List:new("OnResize") -- ... on every resizing of the screen
+Game.channels.onUpdate = List:new("OnUpdate") -- ... on every update of the gameclock
+
+Game.channels.onDraw = {} -- onDraw has layers for easier... drawing. The lower the layer the sooner the object will be drawn 
+Game.channels.onDraw[1] = List:new("Layer[1]") -- as standart it has only one layer
+
+Game.channels.onRMB = List:new('OnRMB') -- ... on clicking the right mouse button
+Game.channels.onLMB = List:new('OnLMB') -- ... the left 
+Game.channels.onMMB = List:new('OnMMB') -- ... the scroll (does not include scrolling, only pressing the scroll)
+
+---gets called on every mouse click
 function Game.onMouseClick()
-    local mp = ""
+    local pressedMouseButton = "" -- holds the channel of the clicked button
     if Cursor.isDown(1) then
-        mp = "onRMB"
+        pressedMouseButton = "onRMB"
     elseif Cursor.isDown(2) then
-        mp = "onLMB"
+        pressedMouseButton = "onLMB"
     else
-        mp = "onMMB"
+        pressedMouseButton = "onMMB"
     end
 
-    for key, func in pairs(Game.lists[mp]:getItems()) do
+    -- runs the attached functions of the clicked mouse button
+    for functionName, func in pairs(Game.channels[pressedMouseButton]:getItems()) do
         func()
     end
 end
-]]
+
 ---gets called on every keypress of the keyboard
 ---@param key love.KeyConstant
 function Game.onKeyboardPress(key)
@@ -35,7 +47,9 @@ end
 function Game.onResize(w, h)
     Window:resize(w, h)
 
-    
+    for functionName, func in pairs(Game.channels.onResize:getItems()) do
+        func()
+    end
 end
 
 --gets called on starting the game
@@ -43,17 +57,39 @@ function Game.onLoad()
     print("Game has loaded")
     Window.set('is game? maybe', nil, nil, { resizable = true})
 
-   
+    for functionName, func in pairs(Game.channels.onLoad:getItems()) do
+        func()
+    end
 end
 
 --gets called every frame
 function Game:onUpdate(dt)
-   
+    for functionName, func in pairs(Game.channels.onUpdate:getItems()) do
+        func()
+    end
 end
 
 --gets called every frame
 function Game.onDraw()
+    for layerIndex, layerList in ipairs(Game.channels.onDraw) do
+        for functionName, func in pairs(layerList:getItems()) do
+            func()
+        end
+    end
+end
+
+---comment
+---@param channel channels
+---@param func function
+---@param functionName string
+---@param drawIndex? number
+function Game.attach(channel, func, functionName, drawIndex)
+    if channel == "onDraw" then
+        Game.channels[channel][drawIndex]:addItem(func, functionName)
+        return
+    end
     
+    Game.channels[channel]:addItem(func, functionName)
 end
 
 return Game

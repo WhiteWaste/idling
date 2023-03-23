@@ -7,7 +7,7 @@ Color.__index = Color
 ---@param blue? number
 ---@param alpha? number
 ---@return Color
-function Color:new(red, green, blue, alpha)
+function Color.new(red, green, blue, alpha)
     local c = setmetatable({}, Color)
 
     red = red or 255
@@ -33,26 +33,26 @@ function Color:setBackgroundColor()
     love.graphics.setBackgroundColor(self.r, self.g, self.b, self.a)
 end
 
-Color.white = Color:new()
-Color.gray = Color:new(127, 127, 127)
-Color.black = Color:new(0, 0, 0)
+Color.white = Color.new()
+Color.gray = Color.new(127, 127, 127)
+Color.black = Color.new(0, 0, 0)
 
-Color.red = Color:new(255, 0, 0)
-Color.darkRed = Color:new(127, 0, 0)
+Color.red = Color.new(255, 0, 0)
+Color.darkRed = Color.new(127, 0, 0)
 
-Color.blue = Color:new(0, 255, 0)
-Color.darkBlue = Color:new(0, 127, 0)
+Color.blue = Color.new(0, 255, 0)
+Color.darkBlue = Color.new(0, 127, 0)
 
-Color.green = Color:new(0, 0, 255)
-Color.darkGreen = Color:new(0, 0, 127)
+Color.green = Color.new(0, 0, 255)
+Color.darkGreen = Color.new(0, 0, 127)
 
-Color.yellow = Color:new(255, 255, 0)
-Color.darkYellow = Color:new(127, 127, 0)
+Color.yellow = Color.new(255, 255, 0)
+Color.darkYellow = Color.new(127, 127, 0)
 
-Color.cyan = Color:new(0, 255, 255)
-Color.darkCyan = Color:new(0, 127, 127)
+Color.cyan = Color.new(0, 255, 255)
+Color.darkCyan = Color.new(0, 127, 127)
 
-Color.magenta = Color:new(255, 0, 255)
-Color.darkMagenta = Color:new(127, 0, 127)
+Color.magenta = Color.new(255, 0, 255)
+Color.darkMagenta = Color.new(127, 0, 127)
 
 return Color
