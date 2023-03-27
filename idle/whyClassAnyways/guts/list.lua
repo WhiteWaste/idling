@@ -4,7 +4,7 @@ List.__index = List
 ---makes a list with the given name
 ---@param listName string
 ---@return List
-function List:new(listName)
+function List.new(listName)
     local l = setmetatable({}, List)
 
     l.name = listName -- holds the name of the list

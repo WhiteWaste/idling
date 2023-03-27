@@ -9,16 +9,16 @@ Color = require "guts.graphics.color"
 local Game = {}
 
 Game.channels = {}
-Game.channels.onLoad = List:new("OnLoad") -- all functions in it get executed on the start 
-Game.channels.onResize = List:new("OnResize") -- ... on every resizing of the screen
-Game.channels.onUpdate = List:new("OnUpdate") -- ... on every update of the gameclock
+Game.channels.onLoad = List.new("OnLoad") -- all functions in it get executed on the start 
+Game.channels.onResize = List.new("OnResize") -- ... on every resizing of the screen
+Game.channels.onUpdate = List.new("OnUpdate") -- ... on every update of the gameclock
 
 Game.channels.onDraw = {} -- onDraw has layers for easier... drawing. The lower the layer the sooner the object will be drawn 
-Game.channels.onDraw[1] = List:new("Layer[1]") -- as standart it has only one layer
+Game.channels.onDraw[1] = List.new("Layer[1]") -- as standart it has only one layer
 
-Game.channels.onRMB = List:new('OnRMB') -- ... on clicking the right mouse button
-Game.channels.onLMB = List:new('OnLMB') -- ... the left 
-Game.channels.onMMB = List:new('OnMMB') -- ... the scroll (does not include scrolling, only pressing the scroll)
+Game.channels.onRMB = List.new('OnRMB') -- ... on clicking the right mouse button
+Game.channels.onLMB = List.new('OnLMB') -- ... the left 
+Game.channels.onMMB = List.new('OnMMB') -- ... the scroll (does not include scrolling, only pressing the scroll)
 
 ---gets called on every mouse click
 function Game.onMouseClick()

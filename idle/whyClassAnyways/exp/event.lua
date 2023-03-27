@@ -1,6 +1,6 @@
 local Event = {}
 
-Event.events = List:new('Events')
+Event.events = List.new('Events')
 
 ---creates a new event type
 ---@param eventType string

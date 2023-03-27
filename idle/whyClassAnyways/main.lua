@@ -31,3 +31,4 @@ function love.draw()
     Game:onDraw()
 end
 
+require "guts.graphics.sprite"
