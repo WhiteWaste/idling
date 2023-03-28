@@ -11,8 +11,8 @@ Point.y = 0
 function Point.new(x, y)
     local p = setmetatable({}, Point)
 
-    p.x = x
-    p.y = y
+    p.x = x or 0
+    p.y = y or 0
 
     return p
 end

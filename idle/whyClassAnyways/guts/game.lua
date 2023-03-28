@@ -4,8 +4,8 @@ List = require "guts.list"
 Window = require "guts.window"
 Cursor = require "guts.cursor"
 
-Color = require "guts.graphics.color"
-
+--Color = require "guts.color"
+Sprite = require "guts.sprite"
 local Game = {}
 
 Game.channels = {}
@@ -56,6 +56,7 @@ end
 function Game.onLoad()
     print("Game has loaded")
     Window.set('is game? maybe', nil, nil, { resizable = true})
+    Sprite.addFromAssets({ "testSquare" })
 
     for functionName, func in pairs(Game.channels.onLoad:getItems()) do
         func()
@@ -76,6 +77,7 @@ function Game.onDraw()
             func()
         end
     end
+    love.graphics.draw(Sprite.sprites.items['testSquare'])
 end
 
 ---comment
