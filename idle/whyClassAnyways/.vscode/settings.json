@@ -2,6 +2,10 @@
     "Lua.runtime.version": "LuaJIT",
     "Lua.runtime.special": [],
     "Lua.workspace.library": [
-        "${3rd}/love2d/library"
+        "${3rd}/love2d/library",
+        "${3rd}/lfs/library"
+    ],
+    "Lua.diagnostics.globals": [
+        "lfs"
     ]
 }

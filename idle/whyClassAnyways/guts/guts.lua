@@ -1,0 +1,1 @@
+Game = require "guts.game"

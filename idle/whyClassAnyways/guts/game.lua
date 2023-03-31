@@ -6,15 +6,13 @@ Cursor = require "guts.cursor"
 
 --Color = require "guts.color"
 Sprite = require "guts.sprite"
+
 local Game = {}
 
 Game.channels = {}
 Game.channels.onLoad = List.new("OnLoad") -- all functions in it get executed on the start 
 Game.channels.onResize = List.new("OnResize") -- ... on every resizing of the screen
 Game.channels.onUpdate = List.new("OnUpdate") -- ... on every update of the gameclock
-
-Game.channels.onDraw = {} -- onDraw has layers for easier... drawing. The lower the layer the sooner the object will be drawn 
-Game.channels.onDraw[1] = List.new("Layer[1]") -- as standart it has only one layer
 
 Game.channels.onRMB = List.new('OnRMB') -- ... on clicking the right mouse button
 Game.channels.onLMB = List.new('OnLMB') -- ... the left 
@@ -56,28 +54,28 @@ end
 function Game.onLoad()
     print("Game has loaded")
     Window.set('is game? maybe', nil, nil, { resizable = true})
-    Sprite.addFromAssets({ "testSquare" })
 
     for functionName, func in pairs(Game.channels.onLoad:getItems()) do
         func()
     end
+
+    Sprite.addFromAssets()
 end
 
 --gets called every frame
 function Game:onUpdate(dt)
     for functionName, func in pairs(Game.channels.onUpdate:getItems()) do
-        func()
+       func()
     end
 end
 
 --gets called every frame
 function Game.onDraw()
-    for layerIndex, layerList in ipairs(Game.channels.onDraw) do
+    for layerIndex, layerList in ipairs(Window.drawLayers) do
         for functionName, func in pairs(layerList:getItems()) do
             func()
         end
     end
-    love.graphics.draw(Sprite.sprites.items['testSquare'])
 end
 
 ---comment

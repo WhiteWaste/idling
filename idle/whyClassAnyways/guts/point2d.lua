@@ -28,15 +28,15 @@ end
 ---returns a point at the center of the screen based on the resolution
 ---@return Point
 function Point.center()
-    return Point.new(Point.resolution.x / 2, Point.resolution.y / 2)
+    return Point.new(Point.screenSize.x / 2, Point.screenSize.y / 2)
 end
 
 ---returns a new point offset by the given x and y
 ---@param x number
 ---@param y number
----@return Point
 function Point:offset(x, y)
-    return Point.new(self.x - x, self.y - y)
+    self.x = self.x + x
+    self.y = self.y + y
 end
 
 return Point

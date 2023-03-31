@@ -27,15 +27,25 @@ function Sprite.newSprite(filePath)
 end
 
 local assetFilePath = "assets/"
----takes a table of asset names and loads them from the assets folder
----@param tableOfassetNames table
-function Sprite.addFromAssets(tableOfassetNames)
+---loads them from the assets folder
+function Sprite.addFromAssets()
+    local spritesInAssets = love.filesystem.getDirectoryItems("assets")
 
-    local pathToImg = ""
-    for index, value in ipairs(tableOfassetNames) do
-        pathToImg = assetFilePath..value..".png"
-        Sprite.newSprite(pathToImg)
+    local sprite
+    local spriteName
+    for fileIndex, fullFileName in ipairs(spritesInAssets) do
+        spriteName = string.sub(fullFileName, 1, #fullFileName - 4)
+        sprite = love.graphics.newImage(assetFilePath..fullFileName)
+        Sprite.sprites:addItem(sprite, spriteName)
+        print(spriteName.." was added")
     end
+end
+
+---returns the sprite with the given name
+---@param spriteName string
+---@return love.Image
+function Sprite.getSprite(spriteName)
+    return Sprite.sprites:getItem(spriteName)
 end
 
 return Sprite

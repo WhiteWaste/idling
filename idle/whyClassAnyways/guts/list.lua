@@ -1,6 +1,10 @@
 local List = {}
 List.__index = List
 
+List.name = ""
+List.itmes = {}
+List.itemCount = 1
+
 ---makes a list with the given name
 ---@param listName string
 ---@return List
@@ -26,6 +30,7 @@ function List:addItem(variable, key)
     end
 
     self.items[key] = variable
+    self.itemCount = self.itemCount + 1
 end
 
 ---takes a table of variables and add them to the list with the same key they had in the given table, does not deepcopy tables. 
@@ -33,6 +38,7 @@ end
 function List:addItems(tableOfVariables)
     for key, value in pairs(tableOfVariables) do
         self.items[key] = value
+        self.itemCount = self.itemCount + 1
     end
 end
 
@@ -45,6 +51,7 @@ function List:removeItem(key)
     end
 
     self.items[key] = nil
+    self.itemCount = self.itemCount - 1
 end
 
 ---returns the item at the given key
@@ -64,14 +71,14 @@ function List:listItems()
     local valType
     local txt = ""
 
-    for key, value in pairs(self.items) do
-        valType = type(value)
+    for key, item in pairs(self.items) do
+        valType = type(item)
         txt = txt.."\n["..key.."] "
 
-        if valType == "function" or valType == "table" then
+        if valType ~= "string" or valType ~= "number" then
             txt = txt..valType
         else
-            txt = txt..value
+            txt = txt..item
         end
     end
 
