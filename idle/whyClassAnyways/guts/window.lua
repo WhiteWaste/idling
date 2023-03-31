@@ -39,12 +39,19 @@ end
 ---@param spriteName string the name of the sprite
 ---@param position Point the position of the sprite on the screen
 ---@param rotation? number the rotation of the sprie when drawn
-function Window.draw(layer, spriteName, position, rotation)
+function Window.startDrawing(layer, spriteName, position, rotation)
     local sprite = Sprite.getSprite(spriteName)
 
     local function drawCall() love.graphics.draw(sprite, position.x, position.y, rotation or 0) end
 
-    Window.drawLayers[layer]:addItem(drawCall, "draw: "..spriteName)
+    Window.drawLayers[layer]:addItem(drawCall, spriteName)
+end
+
+---removes the given sprite from the given layer = stops drawing the given sprite if it exists in the given layer
+---@param layer any
+---@param spriteName any
+function Window.stopDrawing(layer, spriteName)
+    Window.drawLayers[layer]:removeItem(spriteName)
 end
 
 return Window

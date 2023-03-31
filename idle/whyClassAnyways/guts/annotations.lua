@@ -1,5 +1,10 @@
 ---@meta
 
+---@alias mouseButtons string the specific flow you want
+---| '"RMB"'
+---| '"LMB"'
+---| '"MMB"'
+
 ---@alias channels string the specific flow you want
 ---| '"onLoad"'
 ---| '"onUpdate"'

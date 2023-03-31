@@ -1,12 +1,12 @@
 Point = require "guts.point2d"
 List = require "guts.list"
+Sprite = require "guts.sprite"
+
 
 Window = require "guts.window"
 Cursor = require "guts.cursor"
 
 --Color = require "guts.color"
-Sprite = require "guts.sprite"
-
 local Game = {}
 
 Game.channels = {}
@@ -14,23 +14,19 @@ Game.channels.onLoad = List.new("OnLoad") -- all functions in it get executed on
 Game.channels.onResize = List.new("OnResize") -- ... on every resizing of the screen
 Game.channels.onUpdate = List.new("OnUpdate") -- ... on every update of the gameclock
 
-Game.channels.onRMB = List.new('OnRMB') -- ... on clicking the right mouse button
-Game.channels.onLMB = List.new('OnLMB') -- ... the left 
-Game.channels.onMMB = List.new('OnMMB') -- ... the scroll (does not include scrolling, only pressing the scroll)
-
 ---gets called on every mouse click
 function Game.onMouseClick()
     local pressedMouseButton = "" -- holds the channel of the clicked button
-    if Cursor.isDown(1) then
+    if love.mouse.isDown(1) then
         pressedMouseButton = "onRMB"
-    elseif Cursor.isDown(2) then
+    elseif love.mouse.isDown(2) then
         pressedMouseButton = "onLMB"
     else
         pressedMouseButton = "onMMB"
     end
 
     -- runs the attached functions of the clicked mouse button
-    for functionName, func in pairs(Game.channels[pressedMouseButton]:getItems()) do
+    for functionName, func in pairs(Cursor._[pressedMouseButton]:getItems()) do
         func()
     end
 end
@@ -55,11 +51,11 @@ function Game.onLoad()
     print("Game has loaded")
     Window.set('is game? maybe', nil, nil, { resizable = true})
 
+    Sprite.addFromAssets()
+
     for functionName, func in pairs(Game.channels.onLoad:getItems()) do
         func()
     end
-
-    Sprite.addFromAssets()
 end
 
 --gets called every frame
@@ -76,20 +72,6 @@ function Game.onDraw()
             func()
         end
     end
-end
-
----comment
----@param channel channels
----@param func function
----@param functionName string
----@param drawIndex? number
-function Game.attach(channel, func, functionName, drawIndex)
-    if channel == "onDraw" then
-        Game.channels[channel][drawIndex]:addItem(func, functionName)
-        return
-    end
-    
-    Game.channels[channel]:addItem(func, functionName)
 end
 
 return Game

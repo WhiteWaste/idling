@@ -1,7 +1,5 @@
 require "guts.guts"
 
-
-
 function love.mousepressed()
     Game:onMouseClick()
 end
@@ -22,7 +20,7 @@ function love.load()
     love.keyboard.keysPressed = {}
 
     Game:onLoad()
-    require "scipts.tower"
+    --require "scipts.tower"
 end
 
 function love.update(dt)
