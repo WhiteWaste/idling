@@ -34,10 +34,15 @@ function Window:resize(newWidth, newHeight)
     Window.set(self.title, Point.new(newWidth, newHeight), self.resolution, self.flags)
 end
 
+---Draws the given sprite with the given atributes
+---@param layer number the lowerer the number, the sooner it's drawn
+---@param spriteName string the name of the sprite
+---@param position Point the position of the sprite on the screen
+---@param rotation? number the rotation of the sprie when drawn
 function Window.draw(layer, spriteName, position, rotation)
     local sprite = Sprite.getSprite(spriteName)
 
-    local function drawCall() love.graphics.draw(sprite, position.x, position.y, rotation, 10, 10) end
+    local function drawCall() love.graphics.draw(sprite, position.x, position.y, rotation or 0) end
 
     Window.drawLayers[layer]:addItem(drawCall, "draw: "..spriteName)
 end
