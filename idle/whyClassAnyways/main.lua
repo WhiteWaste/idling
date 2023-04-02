@@ -20,7 +20,6 @@ function love.load()
     love.keyboard.keysPressed = {}
 
     Game:onLoad()
-    --require "scipts.tower"
 end
 
 function love.update(dt)

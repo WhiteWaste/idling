@@ -2,7 +2,7 @@ Point = require "guts.point2d"
 List = require "guts.list"
 Sprite = require "guts.sprite"
 
-
+GameClock = require "guts.gameClock"
 Window = require "guts.window"
 Cursor = require "guts.cursor"
 
@@ -11,7 +11,6 @@ local Game = {}
 
 Game.channels = {}
 Game.channels.onLoad = List.new("OnLoad") -- all functions in it get executed on the start 
-Game.channels.onResize = List.new("OnResize") -- ... on every resizing of the screen
 Game.channels.onUpdate = List.new("OnUpdate") -- ... on every update of the gameclock
 
 ---gets called on every mouse click
@@ -49,7 +48,7 @@ end
 --gets called on starting the game
 function Game.onLoad()
     print("Game has loaded")
-    Window.set('is game? maybe', nil, nil, { resizable = true})
+    Window.set('is game? maybe', nil, nil)
 
     Sprite.addFromAssets()
 
@@ -60,15 +59,16 @@ end
 
 --gets called every frame
 function Game:onUpdate(dt)
-    for functionName, func in pairs(Game.channels.onUpdate:getItems()) do
+    GameClock.deltaTime = dt
+    for functionName, func in pairs(GameClock._.onUpdate:getItems()) do
        func()
     end
 end
 
 --gets called every frame
 function Game.onDraw()
-    for layerIndex, layerList in ipairs(Window.drawLayers) do
-        for functionName, func in pairs(layerList:getItems()) do
+    for layerName, layer in pairs(Window.drawLayers) do
+        for functionName, func in pairs(layer:getItems()) do
             func()
         end
     end
