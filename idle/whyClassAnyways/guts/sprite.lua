@@ -22,14 +22,15 @@ function Sprite.newSprite(filePath)
     
     -- the last element is the name of the file with the file extention. The string.sub clears the file extention 
     Sprite.sprites:addItem(sprite, string.sub(splitFilePath[#splitFilePath], 0, string.len(splitFilePath[#splitFilePath]) - 4))
-    print(string.sub(splitFilePath[#splitFilePath], 0, string.len(splitFilePath[#splitFilePath]) - 4))
+    
     return sprite
 end
 
 local assetFilePath = "assets/"
 ---loads them from the assets folder
 function Sprite.addFromAssets()
-    local spritesInAssets = love.filesystem.getDirectoryItems("assets")
+    
+    --[[local spritesInAssets = love.filesystem.getDirectoryItems("assets")
 
     local sprite
     local spriteName
@@ -37,8 +38,7 @@ function Sprite.addFromAssets()
         spriteName = string.sub(fullFileName, 1, #fullFileName - 4)
         sprite = love.graphics.newImage(assetFilePath..fullFileName)
         Sprite.sprites:addItem(sprite, spriteName)
-        print(spriteName.." was added")
-    end
+    end]]
 end
 
 ---returns the sprite with the given name

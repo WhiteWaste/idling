@@ -43,6 +43,9 @@ function Window.startDrawing(layer, spriteName, position, rotation)
     local sprite = Sprite.getSprite(spriteName)
 
     local function drawCall() love.graphics.draw(sprite, position.x, position.y, rotation or 0) end
+    if layer > #Window.drawLayers then
+        Window.drawLayers[layer] = List.new("layer"..layer)
+    end
 
     Window.drawLayers[layer]:addItem(drawCall, spriteName)
 end
