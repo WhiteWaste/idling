@@ -7,7 +7,7 @@ local function splitSource(source)
     local stringArray = {}
 
     for word in string.gmatch(source, "([^/]+)") do
-        stringArray[#stringArray + 1] = word
+        table.insert(stringArray, word)
     end
 
     return stringArray
@@ -19,26 +19,23 @@ end
 function Sprite.newSprite(filePath)
     local sprite = love.graphics.newImage(filePath)
     local splitFilePath = splitSource(filePath)
-    
     -- the last element is the name of the file with the file extention. The string.sub clears the file extention 
-    Sprite.sprites:addItem(sprite, string.sub(splitFilePath[#splitFilePath], 0, string.len(splitFilePath[#splitFilePath]) - 4))
-    
+    local spriteName = string.sub(splitFilePath[#splitFilePath], 0, string.len(splitFilePath[#splitFilePath]) - 4)
+
+    Sprite.sprites:addItem(sprite, spriteName)
+    print(spriteName.."was added")
     return sprite
 end
 
-local assetFilePath = "assets/"
----loads them from the assets folder
+---loads all PNGs in assets as sprites
 function Sprite.addFromAssets()
-    
-    --[[local spritesInAssets = love.filesystem.getDirectoryItems("assets")
+    local filesInAssets = FileSystem.gutDirectory("assets")
 
-    local sprite
-    local spriteName
-    for fileIndex, fullFileName in ipairs(spritesInAssets) do
-        spriteName = string.sub(fullFileName, 1, #fullFileName - 4)
-        sprite = love.graphics.newImage(assetFilePath..fullFileName)
-        Sprite.sprites:addItem(sprite, spriteName)
-    end]]
+    local fullFileName = {}
+    local spriteName = ""
+    for spriteIndex, fullFilePath in ipairs(filesInAssets) do
+        Sprite.newSprite(fullFilePath)
+    end
 end
 
 ---returns the sprite with the given name

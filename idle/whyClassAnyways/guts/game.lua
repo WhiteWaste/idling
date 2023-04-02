@@ -1,5 +1,6 @@
 Point = require "guts.point2d"
 List = require "guts.list"
+FileSystem = require "guts.fileSystem"
 Sprite = require "guts.sprite"
 
 GameClock = require "guts.gameClock"
