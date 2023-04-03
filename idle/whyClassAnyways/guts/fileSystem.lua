@@ -23,7 +23,8 @@ end
 function FileSystem.gutDirectory(dirPath)
     local fileNamesTable = love.filesystem.getDirectoryItems(dirPath)
     local filePathsTable = {}
-        for fileIndex, fullFileName in ipairs(fileNamesTable) do
+
+    for fileIndex, fullFileName in ipairs(fileNamesTable) do
         local filePath = dirPath.."/"..fullFileName
         local fileInfo = love.filesystem.getInfo(filePath)
 

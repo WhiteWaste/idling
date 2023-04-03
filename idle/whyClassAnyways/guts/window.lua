@@ -40,7 +40,7 @@ end
 ---@param position Point the position of the sprite on the screen
 ---@param rotation? number the rotation of the sprie when drawn
 function Window.startDrawing(layer, spriteName, position, rotation)
-    local sprite = Sprite.getSprite(spriteName)
+    local sprite = Graphics.getSprite(spriteName)
 
     local function drawCall() love.graphics.draw(sprite, position.x, position.y, rotation or 0) end
     if layer > #Window.drawLayers then
@@ -48,6 +48,27 @@ function Window.startDrawing(layer, spriteName, position, rotation)
     end
 
     Window.drawLayers[layer]:addItem(drawCall, spriteName)
+end
+
+---comment
+---@param layer number
+---@param text string
+---@param textStyling TextStyle
+---@param position Point
+function Window.startWriting(layer, text, textStyling, position)
+    textStyling = {
+        fontColor = textStyling.fontColor or Color.white,
+        fontName = textStyling.fontName or 'default'
+    }
+    local txt = Graphics.newText(text, textStyling.fontName)
+    
+    local function writeCall()
+        textStyling.fontColor:setColor()
+        love.graphics.draw(txt, position.x, position.y)
+        Color.resetColor()
+    end
+
+    Window.drawLayers[layer]:addItem(writeCall, text)
 end
 
 ---removes the given sprite from the given layer = stops drawing the given sprite if it exists in the given layer

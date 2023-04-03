@@ -33,6 +33,10 @@ function Color:setBackgroundColor()
     love.graphics.setBackgroundColor(self.r, self.g, self.b, self.a)
 end
 
+function Color.resetColor()
+    love.graphics.setColor(0, 0, 0)
+end
+
 Color.white = Color.new()
 Color.gray = Color.new(127, 127, 127)
 Color.black = Color.new(0, 0, 0)

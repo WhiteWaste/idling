@@ -1,18 +1,15 @@
 Point = require "guts.point2d"
 List = require "guts.list"
+Color = require "guts.graphics.color"
+
 FileSystem = require "guts.fileSystem"
-Sprite = require "guts.sprite"
+Graphics = require "guts.graphics"
 
 GameClock = require "guts.gameClock"
 Window = require "guts.window"
 Cursor = require "guts.cursor"
 
---Color = require "guts.color"
 local Game = {}
-
-Game.channels = {}
-Game.channels.onLoad = List.new("OnLoad") -- all functions in it get executed on the start 
-Game.channels.onUpdate = List.new("OnUpdate") -- ... on every update of the gameclock
 
 ---gets called on every mouse click
 function Game.onMouseClick()
@@ -40,10 +37,6 @@ end
 --gets called upon resizing the screen
 function Game.onResize(w, h)
     Window:resize(w, h)
-
-    for functionName, func in pairs(Game.channels.onResize:getItems()) do
-        func()
-    end
 end
 
 --gets called on starting the game
@@ -51,11 +44,9 @@ function Game.onLoad()
     print("Game has loaded")
     Window.set('is game? maybe', nil, nil)
 
-    Sprite.addFromAssets()
-
-    for functionName, func in pairs(Game.channels.onLoad:getItems()) do
-        func()
-    end
+    Graphics.addFromAssets()
+    Graphics.setTheLoveBaseFontAsDefault()
+    Window.startWriting(1, "test", { fontColor = Color.red }, Point.new(50, 50))
 end
 
 --gets called every frame
